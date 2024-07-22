@@ -45,3 +45,25 @@ total 12
 -rw-------. 1 root root 1704 Jul 20 12:23 serverkey.pem
 
 `````
+
+6. To import the CA cert to system so that we do not get the SSL self signed warning you can import the certificate to Anchors.
+
+7. Before importing the certificate we get error while running curl command. In below output myblog.com is my webserver.
+````bash
+# curl https://myblog.com
+curl: (60) SSL certificate problem: self-signed certificate in certificate chain
+More details here: https://curl.se/docs/sslcerts.html
+````
+8. Now copy the cert and then run the curl command.
+````bash
+cp ca.crt /etc/pki/ca-trust/source/anchors/
+update-ca-trust 
+curl https://myblog.com
+# curl https://myblog.com
+<html>
+	<h1>	welcome to test server </h1>
+	</html>
+````
+
+
+````
